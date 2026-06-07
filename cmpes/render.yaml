@@ -3,8 +3,7 @@ services:
     name: cmpes
     env: python
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    preDeployCommand: python manage.py migrate --noinput
-    startCommand: gunicorn config.wsgi:application
+    startCommand: python manage.py migrate --noinput && gunicorn config.wsgi:application
     envVars:
       - key: PYTHON_VERSION
         value: "3.14.3"

@@ -16,9 +16,9 @@
 `CSRF_TRUSTED_ORIGINS=https://<your-render-domain>`
 `ADMIN_URL=<private-admin-path>/`
 
-7. Run migrations from the Render shell or release phase: `python manage.py migrate`.
-8. Create the first admin: `python manage.py createsuperuser`.
-9. For demo data, optionally run: `python manage.py seed_demo_data`.
+7. On Render Free, migrations run inside the start command before Gunicorn starts.
+8. Create the first admin from the Render shell: `python manage.py createsuperuser`.
+9. For demo data, optionally run from the Render shell: `python manage.py seed_demo_data`.
 
 Render terminates TLS before Gunicorn. If deploying behind your own VM, use Nginx or Apache as the HTTPS reverse proxy to the WSGI server.
 
