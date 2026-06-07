@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="workspace-hero">
+  <div>
+    <p class="section-label">Administrator Console</p>
+    <h1>Command center for contracts, users, performance, and governance.</h1>
+    <p>Monitor operational health, audit recent activity, and keep the contract lifecycle accountable from one secure workspace.</p>
+  </div>
+  <div class="hero-action-stack">
+    <a class="button cta" href="{% url 'user_create' %}">Create User</a>
+    <a class="button ghost" href="{% url 'contract_create' %}">New Contract</a>
+  </div>
+</section>
+{% include "partials/metrics.html" %}
+<section class="grid two">
+  <div class="panel insight-panel">
+    <h2>System Overview</h2>
+    <div class="mini-stats">
+      <article><strong>{{ user_count }}</strong><span>Users</span></article>
+      <article><strong>{{ kpi_count }}</strong><span>KPIs</span></article>
+      <article><strong>{{ report_count }}</strong><span>Reports</span></article>
+      <article><strong>{{ upcoming_deadlines }}</strong><span>Due in 14 days</span></article>
+    </div>
+  </div>
+  <div class="panel">
+    <h2>Contracts by Status</h2>
+    <div class="status-bars">
+      {% for row in contracts_by_status %}
+        <div><span>{{ row.status }}</span><b style="width: {% widthratio row.total contract_count 100 %}%"></b><strong>{{ row.total }}</strong></div>
+      {% empty %}
+        <p>No contracts yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<section class="panel">
+  <h2>Recent Audit Activity</h2>
+  <div class="activity-feed">
+    {% for log in recent_audit_logs %}
+      <article><span>{{ log.created_at|date:"M d, H:i" }}</span><strong>{{ log.get_action_display }}</strong><p>{{ log.summary }}{% if log.actor %} by {{ log.actor.full_name }}{% endif %}</p></article>
+    {% empty %}
+      <p>No audit activity recorded yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-title"><h1>Assignments</h1>{% if user.role != "CONTRACTOR" %}<a class="button" href="{% url 'assignment_create' %}">New Assignment</a>{% endif %}</section>
+<section class="panel"><table><tr><th>Contract</th><th>User</th><th>Role</th><th>Responsibility</th></tr>{% for assignment in assignments %}<tr><td>{{ assignment.contract.title }}</td><td>{{ assignment.user.full_name }}</td><td>{{ assignment.get_role_in_contract_display }}</td><td>{{ assignment.responsibility }}</td></tr>{% empty %}<tr><td colspan="4">No assignments.</td></tr>{% endfor %}</table></section>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="workspace-hero">
+  <div>
+    <p class="section-label">Contractor Portal</p>
+    <h1>Your assigned contracts, responsibilities, and performance outcomes.</h1>
+    <p>View contract obligations, monitor evaluation results, and keep track of notices from supervisors.</p>
+  </div>
+  <div class="hero-action-stack">
+    <a class="button cta" href="{% url 'contract_list' %}">View Contracts</a>
+    <a class="button ghost" href="{% url 'notification_list' %}">Notifications</a>
+  </div>
+</section>
+{% include "partials/metrics.html" %}
+<section class="grid two">
+  <div class="panel"><h2>Assigned Contracts</h2><table><tr><th>Contract</th><th>Role</th><th>Responsibility</th><th>Status</th></tr>{% for assignment in assignments %}<tr><td><a href="{{ assignment.contract.get_absolute_url }}">{{ assignment.contract.title }}</a></td><td>{{ assignment.get_role_in_contract_display }}</td><td>{{ assignment.responsibility }}</td><td><span class="pill">{{ assignment.contract.get_status_display }}</span></td></tr>{% empty %}<tr><td colspan="4">No assignments yet.</td></tr>{% endfor %}</table></div>
+  <div class="panel"><h2>Recent Results</h2><table><tr><th>Contract</th><th>Score</th><th>Status</th></tr>{% for evaluation in recent_evaluations %}<tr><td>{{ evaluation.contract.title }}</td><td>{{ evaluation.total_score }}</td><td><span class="pill">{{ evaluation.get_status_display }}</span></td></tr>{% empty %}<tr><td colspan="3">No performance results yet.</td></tr>{% endfor %}</table></div>
+</section>
+{% endblock %}

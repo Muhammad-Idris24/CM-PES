@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-title"><h1>User Management</h1><a class="button" href="{% url 'user_create' %}">New User</a></section>
+<section class="panel"><table><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th></th></tr>{% for item in users %}<tr><td>{{ item.full_name }}</td><td>{{ item.email }}</td><td>{{ item.get_role_display }}</td><td>{{ item.is_active|yesno:"Active,Inactive" }}</td><td><a href="{% url 'user_update' item.pk %}">Edit</a> <a href="{% url 'user_deactivate' item.pk %}">Deactivate</a></td></tr>{% endfor %}</table></section>
+{% endblock %}

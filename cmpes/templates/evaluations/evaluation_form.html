@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <h1>{{ title }}</h1>
+  <form method="post" class="grid-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if kpis %}
+      <h2>KPI Scores</h2>
+      {% for kpi in kpis %}<p><label>{{ kpi.name }} (weight {{ kpi.weight }})</label><input type="number" min="0" max="100" step="0.01" name="score_{{ kpi.pk }}" required></p>{% endfor %}
+    {% endif %}
+    <button class="primary">Save Evaluation</button>
+  </form>
+</section>
+{% endblock %}

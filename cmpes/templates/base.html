@@ -1,0 +1,70 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CMPES{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicons/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicons/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicons/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicons/site.webmanifest' %}">
+  <link rel="shortcut icon" href="{% static 'favicons/favicon.ico' %}">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'landing' %}{% endif %}">
+      <img src="{% static 'img/contract-management-logo.jpg' %}" alt="Contract Management System logo">
+      <span>Contract Management</span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" data-menu-toggle>
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="nav-wrap" data-nav-wrap>
+      {% if user.is_authenticated %}
+        <nav class="nav">
+          <a href="{% url 'dashboard' %}">Dashboard</a>
+          <a href="{% url 'contract_list' %}">Contracts</a>
+          <a href="{% url 'assignment_list' %}">Assignments</a>
+          <a href="{% url 'kpi_list' %}">KPIs</a>
+          <a href="{% url 'evaluation_list' %}">Evaluations</a>
+          <a href="{% url 'report_list' %}">Reports</a>
+          <a href="{% url 'notification_list' %}">Alerts ({{ unread_notification_count }})</a>
+          {% if user.role == "ADMIN" %}
+            <a href="{% url 'user_list' %}">Users</a>
+          {% endif %}
+        </nav>
+
+        <form method="post" action="{% url 'logout' %}" class="logout">
+          {% csrf_token %}
+          <button>Logout</button>
+        </form>
+      {% else %}
+        <nav class="nav public-nav">
+          <a href="{% url 'landing' %}#platform">Platform</a>
+          <a href="{% url 'landing' %}#workflow">Workflow</a>
+          <a href="{% url 'landing' %}#governance">Governance</a>
+        </nav>
+
+        <a class="button cta" href="{% url 'login' %}">Login</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="shell">
+    {% for message in messages %}
+      <div class="notice {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

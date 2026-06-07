@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="workspace-hero compact">
+  <div>
+    <p class="section-label">Contract Record</p>
+    <h1>{{ contract.title }}</h1>
+    <p>{{ contract.description }}</p>
+  </div>
+  {% if user.role != "CONTRACTOR" %}
+    <div class="hero-action-stack">
+      <a class="button cta" href="{% url 'contract_update' contract.pk %}">Edit Contract</a>
+      <a class="button ghost" href="{% url 'contract_document_create' contract.pk %}">Upload Document</a>
+    </div>
+  {% endif %}
+</section>
+<section class="grid two">
+  <div class="panel">
+    <h2>Contract Summary</h2>
+    <table><tr><th>Status</th><td><span class="pill">{{ contract.get_status_display }}</span></td></tr><tr><th>Period</th><td>{{ contract.start_date }} to {{ contract.end_date }}</td></tr><tr><th>Primary Document</th><td>{% if contract.document %}<a href="{{ contract.document.url }}">Download</a>{% else %}None{% endif %}</td></tr><tr><th>Created by</th><td>{{ contract.created_by.full_name }}</td></tr></table>
+  </div>
+  <div class="panel">
+    <h2>Assignments</h2>
+    <table>{% for assignment in contract.assignments.all %}<tr><th>{{ assignment.get_role_in_contract_display }}</th><td>{{ assignment.user.full_name }}</td><td>{{ assignment.responsibility }}</td></tr>{% empty %}<tr><td>No assignments.</td></tr>{% endfor %}</table>
+  </div>
+</section>
+<section class="grid two">
+  <div class="panel">
+    <h2>KPIs</h2>
+    <table><tr><th>Name</th><th>Weight</th><th>Description</th></tr>{% for kpi in contract.kpis.all %}<tr><td>{{ kpi.name }}</td><td>{{ kpi.weight }}</td><td>{{ kpi.description }}</td></tr>{% empty %}<tr><td colspan="3">No KPIs defined.</td></tr>{% endfor %}</table>
+  </div>
+  <div class="panel">
+    <h2>Evaluations</h2>
+    <table><tr><th>Score</th><th>Status</th><th>Date</th></tr>{% for evaluation in contract.evaluations.all %}<tr><td><a href="{% url 'evaluation_detail' evaluation.pk %}">{{ evaluation.total_score }}</a></td><td><span class="pill">{{ evaluation.get_status_display }}</span></td><td>{{ evaluation.created_at|date:"Y-m-d" }}</td></tr>{% empty %}<tr><td colspan="3">No evaluations.</td></tr>{% endfor %}</table>
+  </div>
+</section>
+<section class="panel">
+  <h2>Document Versions</h2>
+  <table><tr><th>Title</th><th>Type</th><th>Version</th><th>Uploaded by</th><th>Date</th><th>File</th></tr>{% for document in contract.documents.all %}<tr><td>{{ document.title }}</td><td>{{ document.get_document_type_display }}</td><td>v{{ document.version }}</td><td>{{ document.uploaded_by.full_name }}</td><td>{{ document.uploaded_at|date:"Y-m-d" }}</td><td><a href="{{ document.file.url }}">Download</a></td></tr>{% empty %}<tr><td colspan="6">No document versions uploaded.</td></tr>{% endfor %}</table>
+</section>
+{% endblock %}

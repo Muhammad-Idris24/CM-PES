@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="workspace-hero compact">
+  <div>
+    <p class="section-label">Performance Evaluation</p>
+    <h1>{{ evaluation.contract.title }}</h1>
+    <p>{{ evaluation.feedback|default:"No feedback recorded." }}</p>
+  </div>
+  {% if user.role != "CONTRACTOR" %}
+    <form class="hero-action-stack" method="post">
+      {% csrf_token %}
+      <button class="ghost" formaction="{% url 'evaluation_status_update' evaluation.pk 'REVIEWED' %}">Mark Reviewed</button>
+      <button class="cta" formaction="{% url 'evaluation_status_update' evaluation.pk 'APPROVED' %}">Approve</button>
+    </form>
+  {% endif %}
+</section>
+<section class="grid two">
+  <div class="panel">
+    <h2>Result</h2>
+    <div class="score-orb">{{ evaluation.total_score }}</div>
+    <table><tr><th>Status</th><td><span class="pill">{{ evaluation.get_status_display }}</span></td></tr><tr><th>Evaluator</th><td>{{ evaluation.evaluator.full_name }}</td></tr><tr><th>Date</th><td>{{ evaluation.created_at|date:"Y-m-d H:i" }}</td></tr><tr><th>Reviewed by</th><td>{{ evaluation.reviewed_by.full_name|default:"Pending" }}</td></tr><tr><th>Approved by</th><td>{{ evaluation.approved_by.full_name|default:"Pending" }}</td></tr></table>
+  </div>
+  <div class="panel">
+    <h2>KPI Details</h2>
+    <table><tr><th>KPI</th><th>Weight</th><th>Score</th></tr>{% for detail in evaluation.details.all %}<tr><td>{{ detail.kpi.name }}</td><td>{{ detail.kpi.weight }}</td><td>{{ detail.score }}</td></tr>{% endfor %}</table>
+  </div>
+</section>
+{% endblock %}

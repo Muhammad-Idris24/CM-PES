@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-title"><h1>Evaluations</h1>{% if user.role != "CONTRACTOR" %}<a class="button" href="{% url 'evaluation_create' %}">New Evaluation</a>{% endif %}</section>
+<section class="panel"><table><tr><th>Contract</th><th>Evaluator</th><th>Total Score</th><th>Status</th><th>Date</th></tr>{% for evaluation in evaluations %}<tr><td><a href="{% url 'evaluation_detail' evaluation.pk %}">{{ evaluation.contract.title }}</a></td><td>{{ evaluation.evaluator.full_name }}</td><td>{{ evaluation.total_score }}</td><td><span class="pill">{{ evaluation.get_status_display }}</span></td><td>{{ evaluation.created_at|date:"Y-m-d" }}</td></tr>{% empty %}<tr><td colspan="5">No evaluations.</td></tr>{% endfor %}</table></section>
+{% endblock %}

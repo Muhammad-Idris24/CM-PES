@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-title"><h1>Contracts</h1>{% if user.role != "CONTRACTOR" %}<a class="button" href="{% url 'contract_create' %}">New Contract</a>{% endif %}</section>
+<section class="panel"><table><tr><th>Title</th><th>Status</th><th>Start</th><th>End</th><th>Owner</th></tr>{% for contract in contracts %}<tr><td><a href="{{ contract.get_absolute_url }}">{{ contract.title }}</a></td><td><span class="pill">{{ contract.get_status_display }}</span></td><td>{{ contract.start_date }}</td><td>{{ contract.end_date }}</td><td>{{ contract.created_by.full_name }}</td></tr>{% empty %}<tr><td colspan="5">No contracts available.</td></tr>{% endfor %}</table></section>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}CMPES - Contract Management & Performance Evaluation{% endblock %}
+{% block content %}
+<section class="landing-hero">
+  <div class="hero-copy">
+    <h1>Contract governance, performance scoring, and reporting in one trusted workspace.</h1>
+    <p>CMPES helps organizations centralize contract records, assign accountable teams, define measurable KPIs, evaluate contractor delivery, and generate decision-ready reports.</p>
+    <div class="hero-actions">
+      <a class="button cta" href="{% url 'login' %}">Login to CMPES</a>
+      <a class="button ghost" href="#platform">Explore platform</a>
+    </div>
+  </div>
+  <div class="product-preview" aria-label="CMPES dashboard preview">
+    <div class="preview-top">
+      <span></span><span></span><span></span>
+      <strong>Performance Console</strong>
+    </div>
+    <div class="preview-grid">
+      <div class="preview-stat"><small>Active contracts</small><strong>24</strong></div>
+      <div class="preview-stat warm"><small>Due this week</small><strong>06</strong></div>
+      <div class="preview-stat"><small>Avg. score</small><strong>87.5</strong></div>
+    </div>
+    <div class="preview-chart">
+      <i style="height: 42%"></i><i style="height: 68%"></i><i style="height: 54%"></i><i style="height: 82%"></i><i style="height: 74%"></i>
+    </div>
+    <div class="preview-table">
+      <div><span>Facility Maintenance</span><b>Active</b></div>
+      <div><span>ICT Support</span><b>Review</b></div>
+      <div><span>Road Works</span><b>Scored</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="platform" class="landing-band">
+  <div>
+    <h2>A complete contract lifecycle system</h2>
+    <p>Move from scattered files and manual scoring to one relational, role-aware platform that keeps contract information, assignments, KPIs, evaluations, and reports connected.</p>
+  </div>
+  <div class="feature-row">
+    <article><strong>Lifecycle Control</strong><span>Draft, active, completed, and terminated contracts stay traceable.</span></article>
+    <article><strong>KPI Scoring</strong><span>Weighted performance evaluations calculate consistent totals.</span></article>
+    <article><strong>Executive Reporting</strong><span>Generate print-ready summaries and analytics for review meetings.</span></article>
+  </div>
+</section>
+
+<section id="workflow" class="process-strip">
+  <h2>From contract setup to performance insight</h2>
+  <div class="process-steps">
+    <article><span>01</span><strong>Create contract</strong><p>Register scope, dates, status, owner, and supporting documents.</p></article>
+    <article><span>02</span><strong>Assign responsibility</strong><p>Connect contractors and supervisors to clear duties.</p></article>
+    <article><span>03</span><strong>Measure delivery</strong><p>Define KPI weights and score performance against evidence.</p></article>
+    <article><span>04</span><strong>Report outcomes</strong><p>Turn evaluations into clean summaries and analytics.</p></article>
+  </div>
+</section>
+
+<section id="governance" class="landing-band split">
+  <div>
+    <h2>Built for secure organizational use</h2>
+    <p>Role-based dashboards, CSRF protection, hashed passwords, session authentication, rate-limited login, normalized data, and PostgreSQL-ready deployment keep the system grounded in professional information system practice.</p>
+  </div>
+  <a class="button cta" href="{% url 'login' %}">Access the platform</a>
+</section>
+
+<footer class="landing-footer">
+  <p>CMPES - Contract Management & Performance Evaluation. Secure enterprise governance.</p>
+</footer>
+{% endblock %}
