@@ -55,10 +55,12 @@ a:hover { color: var(--teal); }
 .brand img {
   width: 46px;
   height: 46px;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   border-radius: 10px;
-  box-shadow: 0 12px 22px rgba(66, 122, 181, 0.2);
+  padding: 6px;
+  background: linear-gradient(135deg, var(--navy), var(--blue));
+  box-shadow: 0 12px 22px rgba(66, 122, 181, 0.22);
 }
 .nav-wrap {
   display: flex;
@@ -205,9 +207,11 @@ p { color: var(--muted); }
 .auth-logo {
   width: 88px;
   height: 88px;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   border-radius: 14px;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--navy), var(--blue));
   margin-bottom: 16px;
   box-shadow: 0 16px 34px rgba(66, 122, 181, 0.18);
 }
